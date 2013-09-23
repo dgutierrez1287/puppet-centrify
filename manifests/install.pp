@@ -5,7 +5,6 @@ class centrify::install inherits centrify {
   package { "CentrifyDC":
     ensure => $dc_package_ensure,
     name => $dc_package_name,
-    notify => Exec['adjoin']
   }
   
   # Centrify OpenSSH package
