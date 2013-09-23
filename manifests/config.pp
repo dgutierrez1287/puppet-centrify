@@ -60,8 +60,4 @@ class centrify::config inherits centrify {
     notify => Class["centrify::service"]
   }
   
-  
-  
-  
-  
 }
