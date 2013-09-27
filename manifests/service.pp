@@ -1,4 +1,10 @@
-
+#  Class centrify::service
+#
+#  This class will configure the services for
+#  centrify and also will join the system to the
+#  domain 
+#
+#
 class centrify::service inherits centrify {
 
   # Error check for the dc_service ensure option

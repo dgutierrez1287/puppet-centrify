@@ -1,14 +1,36 @@
 # Class: centrify
 #
-# This module manages centrify
+# This module manages centrify, associated config files and 
+# will join the computer to the domain automatically, Note:
+# this module does require a repo that contains the centrify packages
 #
-# Parameters: none
+# Parameters: 
+#   Optional:
+#   dc_package_name 
+#   dc_package_ensure 
+#   dc_service_name  
+#   dc_service_enable
+#   dc_service_ensure
+#   ssh_package_name
+#   ssh_package_ensure
+#   ssh_service_name
+#   ssh_service_enable
+#   ssh_service_ensure
+#   adjoin_domain
 #
-# Actions:
+#   Required:
+#   auth_servers - a list of DNS names for auth servers
+#   groups_allow -  a list of groups allowed on the machine
+#   users_allow - a list of users allowed on the machine
+#   domain_name - domain name for the auth servers list and/or to join 
+#   adjoin_user - the user used to join the system to the domain
+#   adjoin_password - the password of the user to join 
+#
+# Actions: installes the centrify packages, pushed out the config file
+# from the templates and joins the system to the domain
 #
 # Requires: see Modulefile
 #
-# Sample Usage:
 #
 class centrify (
   $dc_package_name     = $centrify::params::dc_package_name,

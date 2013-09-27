@@ -1,4 +1,8 @@
-
+#  Class centrify::params
+#  
+#  This class contains the default params for 
+#  the centrify module
+#
 class centrify::params {
 
   $dc_package_name     = 'CentrifyDC'

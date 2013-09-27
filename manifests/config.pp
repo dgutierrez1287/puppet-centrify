@@ -1,4 +1,9 @@
-
+#  Class centrify::config
+#  
+#  This class pushes out the needed config files from
+#  the templates that are customized by the module parameters
+#
+#
 class centrify::config inherits centrify {
 
   # Error check for no auth servers
