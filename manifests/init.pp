@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class centrify ( 
+class centrify (
   $dc_package_name     = $centrify::params::dc_package_name,
   $dc_package_ensure   = $centrify::params::dc_package_ensure,
   $dc_service_name     = $centrify::params::dc_service_name,
@@ -29,9 +29,12 @@ class centrify (
   $groups_allow        = $centrify::params::groups_allow,
   $users_allow         = $centrify::params::users_allow,
   $domain_name         = $centrify::params::domain_name,
+  $adjoin_user         = $centrify::params::adjoin_user,
+  $adjoin_password     = $centrify::params::adjoin_password,
+  $adjoin_domain       = $centrify::params::adjoin_domain,
 ) inherits centrify::params {
-  
-  # validate parameters 
+
+  # validate parameters
   validate_string($dc_package_name)
   validate_string($dc_package_ensure)
   validate_string($dc_service_name)
@@ -50,16 +53,19 @@ class centrify (
   validate_array($groups_allow)
   validate_array($users_allow)
   validate_string($domain_name)
-  
+  validate_string($adjoin_user)
+  validate_string($adjoin_password)
+  validate_string($adjoin_domain)
+
   # include classes for install, config and services
   include '::centrify::install'
   include '::centrify::config'
   include '::centrify::service'
-  
+
   # set anchors for begin and end
   anchor { 'centrify::begin': }
   anchor { 'centrify::end': }
-  
-  # ordering of class execution 
+
+  # ordering of class execution
   Anchor ['centrify::begin'] -> Class ['::centrify::install'] -> Class['::centrify::config'] ~> Class['::centrify::service'] -> Anchor['centrify::end']
 }
