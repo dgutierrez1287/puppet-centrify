@@ -17,8 +17,6 @@ class centrify::service inherits centrify {
     fail('ssh_service_ensure parameter must be running or stopped')
   }
 
-
-
   service {'centrify-ssh-service':
     ensure     => $::ssh_service_ensure,
     name       => $::ssh_service_name,
@@ -62,4 +60,7 @@ class centrify::service inherits centrify {
     command     => '/usr/sbin/adflush && /usr/sbin/adreload',
     refreshonly => true,
   }
+  
+  
+  Service['centrify-dc-service'] -> Service['centrify-ssh-service'] -> Exec['adflush'] -> Exec['adjoin']
 }
