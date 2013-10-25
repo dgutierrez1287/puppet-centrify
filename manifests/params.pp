@@ -25,5 +25,6 @@ class centrify::params {
   $domain_name         = ''
   $adjoin_user         = ''
   $adjoin_password     = ''
-  $adjoin_domain       = $domain_name
+  $adjoin_domain       = ''
+  $adjoin_server       = ''
 }

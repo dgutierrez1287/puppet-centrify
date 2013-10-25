@@ -54,6 +54,7 @@ class centrify (
   $adjoin_user         = $centrify::params::adjoin_user,
   $adjoin_password     = $centrify::params::adjoin_password,
   $adjoin_domain       = $centrify::params::adjoin_domain,
+  $adjoin_server       = $centrify::params::adjoin_server,
 ) inherits centrify::params {
 
   # validate parameters
@@ -78,6 +79,7 @@ class centrify (
   validate_string($adjoin_user)
   validate_string($adjoin_password)
   validate_string($adjoin_domain)
+  validate_string($adjoin_server)
 
   # include classes for install, config and services
   include '::centrify::install'

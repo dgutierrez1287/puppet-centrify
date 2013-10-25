@@ -8,23 +8,23 @@
 class centrify::service inherits centrify {
 
   # Error check for the dc_service ensure option
-  if ! ($::dc_service_ensure in [ 'running', 'stopped' ]) {
+  if ! ($dc_service_ensure in [ 'running', 'stopped' ]) {
     fail('dc_service_ensure parameter must be running or stopped')
   }
 
   # Error check for the ssh_service ensure option
-  if ! ($::ssh_service_ensure in [ 'running', 'stopped' ]) {
+  if ! ($ssh_service_ensure in [ 'running', 'stopped' ]) {
     fail('ssh_service_ensure parameter must be running or stopped')
   }
 
   service {'centrify-ssh-service':
-    ensure     => $::ssh_service_ensure,
-    name       => $::ssh_service_name,
+    ensure     => $ssh_service_ensure,
+    name       => $ssh_service_name,
     hasrestart => true,
     hasstatus  => true,
-    enable     => $::ssh_service_enable,
+    enable     => $ssh_service_enable,
     subscribe  => [
-      File['/etc/centrifydc/sshd_config'],
+      File['/etc/centrifydc/ssh/sshd_config'],
       File['/etc/centrifydc/centrifydc.conf'],
       File['/etc/centrifydc/groups.allow'],
       File['/etc/centrifydc/users.allow'],
@@ -33,13 +33,13 @@ class centrify::service inherits centrify {
   }
 
   service {'centrify-dc-service':
-    ensure     => $::dc_service_ensure,
-    name       => $::dc_service_name,
+    ensure     => $dc_service_ensure,
+    name       => $dc_service_name,
     hasrestart => true,
     hasstatus  => true,
-    enable     => $::dc_service_enable,
+    enable     => $dc_service_enable,
     subscribe  => [
-      File['/etc/centrifydc/sshd_config'],
+      File['/etc/centrifydc/ssh/sshd_config'],
       File['/etc/centrifydc/centrifydc.conf'],
       File['/etc/centrifydc/groups.allow'],
       File['/etc/centrifydc/users.allow'],
@@ -50,7 +50,7 @@ class centrify::service inherits centrify {
   # ad-join
   exec { 'adjoin':
     path        => '/usr/bin:/usr/sbin:/bin',
-    command     => "adjoin -w -n ${hostname} -u ${::adjoin_user} -p ${::adjoin_password}  ${::adjoin_domain}",
+    command     => "adjoin -w -u ${adjoin_user} -s ${adjoin_server} -p ${adjoin_password}  ${adjoin_domain}",
     refreshonly => true,
   }
 
@@ -62,5 +62,5 @@ class centrify::service inherits centrify {
   }
   
   
-  Service['centrify-dc-service'] -> Service['centrify-ssh-service'] -> Exec['adflush'] -> Exec['adjoin']
+  Exec['adjoin'] -> Service['centrify-dc-service'] -> Service['centrify-ssh-service'] -> Exec['adflush'] 
 }
