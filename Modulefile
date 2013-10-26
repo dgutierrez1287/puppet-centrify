@@ -3,8 +3,8 @@ version '0.1.0'
 source 'https://github.com/dgutierrez1287/puppet-centrify.git'
 author 'Diego Gutierrez'
 license ''
-summary 'puppet module for Centrify'
-description 'Module for Centrify configuration'
+summary 'puppet module for Centrify '
+description 'Module for Centrify configuration '
 project_page 'https://github.com/dgutierrez1287/puppet-centrify'
 
 ## Add dependencies, if any:
