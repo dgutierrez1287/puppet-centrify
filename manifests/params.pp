@@ -22,7 +22,6 @@ class centrify::params {
   $ssh_banner          = '/etc/motd'
   $groups_allow        = []
   $users_allow         = []
-  $domain_name         = ''
   $adjoin_user         = ''
   $adjoin_password     = ''
   $adjoin_domain       = ''

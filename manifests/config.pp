@@ -19,11 +19,11 @@ class centrify::config inherits centrify {
   }
 
   # Error check for missing domain name
-  if size($domain_name) == 0 {
+  if size($adjoin_domain) == 0 {
     fail('must have a domain name to set up auth servers')
   }
   else {
-    if ! is_domain_name($domain_name){
+    if ! is_domain_name($adjoin_domain){
       fail('domain name does not appear to be valid')
     }
   }

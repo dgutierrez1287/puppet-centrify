@@ -16,15 +16,15 @@
 #   ssh_service_name
 #   ssh_service_enable
 #   ssh_service_ensure
-#   adjoin_domain
 #
 #   Required:
 #   auth_servers - a list of DNS names for auth servers
 #   groups_allow -  a list of groups allowed on the machine
 #   users_allow - a list of users allowed on the machine
-#   domain_name - domain name for the auth servers list and/or to join 
+#   adjoin_domain - domain name for the auth servers list and/or to join 
 #   adjoin_user - the user used to join the system to the domain
 #   adjoin_password - the password of the user to join 
+#   adjoin_server - the server to join the computer to the domain
 #
 # Actions: installes the centrify packages, pushed out the config file
 # from the templates and joins the system to the domain
@@ -50,7 +50,6 @@ class centrify (
   $ssh_banner          = $centrify::params::ssh_banner,
   $groups_allow        = $centrify::params::groups_allow,
   $users_allow         = $centrify::params::users_allow,
-  $domain_name         = $centrify::params::domain_name,
   $adjoin_user         = $centrify::params::adjoin_user,
   $adjoin_password     = $centrify::params::adjoin_password,
   $adjoin_domain       = $centrify::params::adjoin_domain,
@@ -75,7 +74,6 @@ class centrify (
   validate_absolute_path($ssh_banner)
   validate_array($groups_allow)
   validate_array($users_allow)
-  validate_string($domain_name)
   validate_string($adjoin_user)
   validate_string($adjoin_password)
   validate_string($adjoin_domain)

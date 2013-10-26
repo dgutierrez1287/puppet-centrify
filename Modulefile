@@ -1,11 +1,11 @@
 name    'dgutierrez1287-centrify'
 version '0.1.0'
-source ''
+source 'https://github.com/dgutierrez1287/puppet-centrify.git'
 author 'Diego Gutierrez'
 license ''
-summary ''
-description ''
-project_page ''
+summary 'puppet module for Centrify'
+description 'Module for Centrify configuration'
+project_page 'https://github.com/dgutierrez1287/puppet-centrify'
 
 ## Add dependencies, if any:
 # dependency 'username/name', '>= 1.2.0'', '4.1.0'
