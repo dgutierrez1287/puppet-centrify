@@ -6,12 +6,12 @@ Table of Contents
 
 1. [Overview - What is the Centrify module?](#overview)
 2. [Module Description - What does the module do?](#module-description)
-3. [Setup - The basics of getting started with PostgreSQL module](#setup)
+3. [Setup - The basics of getting started with Centrify module](#setup)
 4. [Usage - How to use the module for various tasks](#usage)
 5. [Upgrading - Guide for upgrading from older revisions of this module](#upgrading)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
-8. [Disclaimer - Licensing information](#disclaimer)
+8. [Disclaimer](#disclaimer)
 9. [Contributors - List of module contributors](#contributors)
 
 Overview
@@ -107,7 +107,7 @@ Currently the only testing for the module is with vagrant, due to the nature of 
 Disclaimer
 ----------
 
-This module is provided without warrantyof any kind, the creator(s) and contributors do their best to ensure stablity but can make no warranty about the stability of this module in different environments. The creator(s) and contributors reccomend that you test this module and all future releases of this module in your environment before use.
+This module is provided without warranty of any kind, the creator(s) and contributors do their best to ensure stablity but can make no warranty about the stability of this module in different environments. The creator(s) and contributors reccomend that you test this module and all future releases of this module in your environment before use.
 
 Contributors
 ------------
