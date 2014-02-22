@@ -26,4 +26,7 @@ class centrify::params {
   $adjoin_password     = ''
   $adjoin_domain       = ''
   $adjoin_server       = ''
+  $private_group       = true
+  $primary_gid         = ''
+  $auto_join           = true
 }
