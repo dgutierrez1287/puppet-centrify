@@ -17,7 +17,7 @@ class centrify::config inherits centrify {
       fail('there are no users or groups to authenticate, this is not recommended')
     }
   }
-
+  
   # Error check for missing domain name
   if size($adjoin_domain) == 0 {
     fail('must have a domain name to set up auth servers')

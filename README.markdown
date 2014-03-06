@@ -79,11 +79,14 @@ Below is a list of optional options and the default values:
 * ssh_port: the port for ssh (note this port must be open on the firewall), the default is *22*
 * ssh_x11: x11 forwarding for ssh, the default is *no*
 * ssh_banner: the banner location for ssh, the default is */etc/motd*
+* auto_join: to autojoin or not to a domain, the default is true
+* primary_gid: the auto.schema primary gid, the default is none
+* private_group: the auto.schema private group setting, the default is true
 
 Upgrading
 ---------
 
-Since this is the first version there are no notes about upgrading
+The upgrades since 0.1.0 have been minor and should not require any changes since the default behavior will have the same settings as the did before the addition of those options
 
 Limitations
 -----------

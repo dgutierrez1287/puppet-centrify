@@ -2409,7 +2409,7 @@ nss.runtime.defaultvalue.var.domain: $DOMAIN
 # On Darwin
 # auto.schema.private.group: false
 # On Linux, Solaris, HP, AIX
-# auto.schema.private.group: true
+<% if !@private_group %>auto.schema.private.group: false <% else %># auto.schema.private.group: true <% end %>
 #
 
 #
@@ -2420,6 +2420,7 @@ nss.runtime.defaultvalue.var.domain: $DOMAIN
 # On Darwin
 # auto.schema.primary.gid: 20
 # On Linux, Solaris, HP, AIX
+<% if @primary_gid != '' %>auto.schema.primary.gid: <%= @primary_gid %> <% else %># auto.schema.primary.gid: <% end %>
 # auto.schema.primary.gid:
 #
 
