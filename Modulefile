@@ -1,5 +1,5 @@
 name    'dgutierrez1287-centrify'
-version '0.1.0'
+version '0.1.1'
 source 'https://github.com/dgutierrez1287/puppet-centrify.git'
 author 'Diego Gutierrez'
 license ''
