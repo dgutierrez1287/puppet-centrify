@@ -1,14 +1,14 @@
 # Class: centrify
 #
-# This module manages centrify, associated config files and 
+# This module manages centrify, associated config files and
 # will join the computer to the domain automatically, Note:
 # this module does require a repo that contains the centrify packages
 #
-# Parameters: 
+# Parameters:
 #   Optional:
-#   dc_package_name 
-#   dc_package_ensure 
-#   dc_service_name  
+#   dc_package_name
+#   dc_package_ensure
+#   dc_service_name
 #   dc_service_enable
 #   dc_service_ensure
 #   ssh_package_name
@@ -21,9 +21,9 @@
 #   auth_servers - a list of DNS names for auth servers
 #   groups_allow -  a list of groups allowed on the machine
 #   users_allow - a list of users allowed on the machine
-#   adjoin_domain - domain name for the auth servers list and/or to join 
+#   adjoin_domain - domain name for the auth servers list and/or to join
 #   adjoin_user - the user used to join the system to the domain
-#   adjoin_password - the password of the user to join 
+#   adjoin_password - the password of the user to join
 #   adjoin_server - the server to join the computer to the domain
 #
 # Actions: installes the centrify packages, pushed out the config file
@@ -95,5 +95,7 @@ class centrify (
   anchor { 'centrify::end': }
 
   # ordering of class execution
-  Anchor ['centrify::begin'] -> Class ['::centrify::install'] -> Class['::centrify::config'] ~> Class['::centrify::service'] -> Anchor['centrify::end']
+  Anchor ['centrify::begin'] -> Class ['::centrify::install'] ->
+  Class['::centrify::config'] ~> Class['::centrify::service'] ->
+  Anchor['centrify::end']
 }
