@@ -4,7 +4,7 @@
 #  the templates that are customized by the module parameters
 #
 #
-class centrify::config inherits centrify{
+class centrify::config {
 
   # Error check for no auth servers
   if size($::centrify::auth_servers) == 0 {

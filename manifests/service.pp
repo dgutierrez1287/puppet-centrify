@@ -5,7 +5,7 @@
 #  domain
 #
 #
-class centrify::service inherits centrify{
+class centrify::service {
 
   if $::centrify::auto_join {
 
