@@ -14,8 +14,7 @@ class centrify::config {
   # Error check for no users or groups allowed in the system
   if size($::centrify::users_allow) == 0 {
     if size($::centrify::groups_allow) ==0 {
-      fail('there are no users or groups to authenticate, \
-        this is not recommended')
+      fail('there are no users or groups to authenticate, this is not recommended')
     }
   }
 
