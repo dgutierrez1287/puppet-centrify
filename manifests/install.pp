@@ -4,7 +4,7 @@
 #  that are part of the centrify install
 #
 #
-class centrify::install {
+class centrify::install inherits centrify{
 
   # Centrify Direct Control package
   package { 'CentrifyDC':
