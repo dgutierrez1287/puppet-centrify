@@ -25,7 +25,8 @@ class centrify::service {
     exec { 'adjoin':
       path        => '/usr/bin:/usr/sbin:/bin',
       command     => "adjoin -w -u ${::centrify::adjoin_user} \
-                     -s ${::centrify::adjoin_server} -p ${::centrify::adjoin_password} \
+                     -s ${::centrify::adjoin_server} \
+                     -p ${::centrify::adjoin_password} \
                       ${::centrify::adjoin_domain}",
       refreshonly => true,
     }
