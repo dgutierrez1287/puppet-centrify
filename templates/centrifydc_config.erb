@@ -2491,5 +2491,5 @@ nss.runtime.defaultvalue.var.domain: $DOMAIN
 # You must restart adclient to have this take effect.
 #
 # auto.schema.search.return.max: 1000
-<% @auth_servers.each do |as| %> dns.dc.<%= @domain_name %>: <%= as %>
+<% @auth_servers.each do |as| %> dns.dc.<%= @adjoin_domain%>: <%= as %>
 <% end %>
