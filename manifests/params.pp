@@ -5,12 +5,23 @@
 #
 class centrify::params {
 
-  $dc_package_name     = 'CentrifyDC'
+  case $::osfamily {
+    'RedHat' : {
+      $dc_package_name  = 'CentrifyDC'
+      $ssh_package_name = 'CentrifyDC-openssh'
+    }
+    'Debian' : {
+      $dc_package_name  = 'centrifydc'
+      $ssh_package_name = 'centrifydc-openssh'
+    }
+    default  : {
+      fail("${::osfamily} is not currently supported.")
+    }
+  }
   $dc_package_ensure   = 'present'
   $dc_service_name     = 'centrifydc'
   $dc_service_enable   = true
   $dc_service_ensure   = 'running'
-  $ssh_package_name    = 'CentrifyDC-openssh'
   $ssh_package_ensure  = 'present'
   $ssh_service_name    = 'centrify-sshd'
   $ssh_service_enable  = true
