@@ -95,6 +95,7 @@ works with all current versions of centrify express
 
 currently only tested on:
 * CentOS 5.x and 6.x and related distros
+* modern ubuntu versions (this should work on debian as well)
 
 Although patches are welcome for making it work with other OS distros, it is considered best effort.
 
@@ -116,4 +117,5 @@ Contributors
 ------------
 
 * [Diego Gutierrez](https://github.com/dgutierrez1287) ([@diego_g](https://twitter.com/diego_g))
+* [xalimar](https://github.com/xalimar)
 
