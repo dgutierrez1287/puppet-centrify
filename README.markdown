@@ -51,7 +51,7 @@ Usage
 example usage with required options:
 	
 	class { 'centrify':
-	 authservers     => ["ad1.example.com', 'ad2.example.com'],
+	 auth_servers    => ["ad1.example.com', 'ad2.example.com'],
 	 users_allow     => ['username1', 'username2'],
 	 adjoin_user     => 'joinuser',
 	 adjoin_password => 'joinpass123',
