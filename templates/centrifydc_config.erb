@@ -1839,7 +1839,7 @@ w password length,\nlack of complexity or a minimum age for the current password
 # disabled by default. You must run adreload to detect changes
 # in the local group file.
 #
-<% if @group_merge %>adclient.local.group.merge: true <% else %># adclient.local.group.merge: false <% end %>
+<% if @merge_groups %>adclient.local.group.merge: true <% else %># adclient.local.group.merge: false <% end %>
 #
 #
 # The time difference of the host and domain. If it less than 5min, call the
@@ -2064,7 +2064,7 @@ UBYLIB, RUBYOPT,KRB5_CONFIG,KRB5_KTNAME,VAR_ACE,USR_ACE,DLC_ACE, SHLIB_PATH, LDR
 # using Windows Group Policy.  Changing the value in this file will have no
 # effect.
 #
-secedit.system.access.maximumpasswordage: <%= @maximumpasswordage %>
+secedit.system.access.maximumpasswordage: <%= @maximum_password_age %>
 #
 
 #
@@ -2090,7 +2090,7 @@ secedit.system.access.maximumpasswordage: <%= @maximumpasswordage %>
 # using Windows Group Policy.  Changing the value in this file will have no
 # effect.
 #
-secedit.system.access.minimumpasswordage: <%= @minimumpasswordage %>
+secedit.system.access.minimumpasswordage: <%= @minimum_password_age %>
 #
 
 # Determines the number of minutes a locked-out account remains locked out
@@ -2112,7 +2112,7 @@ secedit.system.access.minimumpasswordage: <%= @minimumpasswordage %>
 # the machine group policies are updated, the settings will revert back to
 # Windows group policy settings.
 #
-secedit.system.access.lockoutduration: <%= @lockoutduration %>
+secedit.system.access.lockoutduration: <%= @lockout_duration %>
 #
 
 # Account lockout threshold
@@ -2142,7 +2142,7 @@ secedit.system.access.lockoutduration: <%= @lockoutduration %>
 # the machine group policies are updated, the settings will revert back to
 # Windows group policy settings.
 #
-secedit.system.access.lockoutbadcount: <%= @lockoutbadcount %>
+secedit.system.access.lockoutbadcount: <%= @lockout_bad_count %>
 #
 
 #
