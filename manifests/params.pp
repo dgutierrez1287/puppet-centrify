@@ -44,4 +44,5 @@ class centrify::params {
   $minimumpasswordage  = '1'
   $lockoutduration     = '30'
   $lockoutbadcount     = '0'
+  $merge_groups        = false
 }

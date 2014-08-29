@@ -1839,9 +1839,8 @@ w password length,\nlack of complexity or a minimum age for the current password
 # disabled by default. You must run adreload to detect changes
 # in the local group file.
 #
-# adclient.local.group.merge: false
+<% if @group_merge %>adclient.local.group.merge: true <% else %># adclient.local.group.merge: false <% end %>
 #
-
 #
 # The time difference of the host and domain. If it less than 5min, call the
 # adjtime function to update the host time, otherwise call the settimeofday function
