@@ -57,6 +57,10 @@ class centrify (
   $private_group       = $centrify::params::private_group,
   $primary_gid         = $centrify::params::primary_gid,
   $auto_join           = $centrify::params::auto_join,
+  $maximumpasswordage  = $centrify::params::maximumpasswordage,
+  $minimumpasswordage  = $centrify::params::minimumpasswordage,
+  $lockoutduration     = $centrify::params::lockoutduration,
+  $lockoutbadcount     = $centrify::params::lockoutbadcount,
 ) inherits centrify::params {
 
   # validate parameters

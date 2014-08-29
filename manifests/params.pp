@@ -40,4 +40,8 @@ class centrify::params {
   $private_group       = true
   $primary_gid         = ''
   $auto_join           = true
+  $maximumpasswordage  = '90'
+  $minimumpasswordage  = '1'
+  $lockoutduration     = '30'
+  $lockoutbadcount     = '0'
 }

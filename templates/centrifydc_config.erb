@@ -2065,7 +2065,7 @@ UBYLIB, RUBYOPT,KRB5_CONFIG,KRB5_KTNAME,VAR_ACE,USR_ACE,DLC_ACE, SHLIB_PATH, LDR
 # using Windows Group Policy.  Changing the value in this file will have no
 # effect.
 #
-secedit.system.access.maximumpasswordage: 90
+secedit.system.access.maximumpasswordage: <%= @maximumpasswordage %>
 #
 
 #
@@ -2091,7 +2091,7 @@ secedit.system.access.maximumpasswordage: 90
 # using Windows Group Policy.  Changing the value in this file will have no
 # effect.
 #
-secedit.system.access.minimumpasswordage: 1
+secedit.system.access.minimumpasswordage: <%= @minimumpasswordage %>
 #
 
 # Determines the number of minutes a locked-out account remains locked out
@@ -2113,7 +2113,7 @@ secedit.system.access.minimumpasswordage: 1
 # the machine group policies are updated, the settings will revert back to
 # Windows group policy settings.
 #
-# secedit.system.access.lockoutduration: 30
+secedit.system.access.lockoutduration: <%= @lockoutduration %>
 #
 
 # Account lockout threshold
@@ -2143,7 +2143,7 @@ secedit.system.access.minimumpasswordage: 1
 # the machine group policies are updated, the settings will revert back to
 # Windows group policy settings.
 #
-secedit.system.access.lockoutbadcount: 0
+secedit.system.access.lockoutbadcount: <%= @lockoutbadcount %>
 #
 
 #
