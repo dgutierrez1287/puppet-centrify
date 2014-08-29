@@ -76,12 +76,17 @@ Below is a list of optional options and the default values:
 * ssh\_service\_enable: to enable or disable the ssh service, the default is *true*
 * ssh\_service\_ensure: the ensure for the ssh service, the default is *running*
 * ssh\_permit\_root: to permit root access via ssh, the default is *no*
-* ssh_port: the port for ssh (note this port must be open on the firewall), the default is *22*
-* ssh_x11: x11 forwarding for ssh, the default is *no*
-* ssh_banner: the banner location for ssh, the default is */etc/motd*
-* auto_join: to autojoin or not to a domain, the default is true
-* primary_gid: the auto.schema primary gid, the default is none
-* private_group: the auto.schema private group setting, the default is true
+* ssh\_port: the port for ssh (note this port must be open on the firewall), the default is *22*
+* ssh\_x11: x11 forwarding for ssh, the default is *no*
+* ssh\_banner: the banner location for ssh, the default is */etc/motd*
+* auto\_join: to autojoin or not to a domain, the default is true
+* primary\_gid: the auto.schema primary gid, the default is none
+* private\_group: the auto.schema private group setting, the default is true
+* maximum\_password\_age: the maximum age of a password
+* minimum\_password\_age: the minimum age of a password
+* lockout\_duration: the duration of a lockout
+* lockout\_bad\_count: the bad count that would cause a lockout
+* merge\_groups: merge local group setting 
 
 Upgrading
 ---------
