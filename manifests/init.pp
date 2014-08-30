@@ -4,27 +4,7 @@
 # will join the computer to the domain automatically, Note:
 # this module does require a repo that contains the centrify packages
 #
-# Parameters:
-#   Optional:
-#   dc_package_name
-#   dc_package_ensure
-#   dc_service_name
-#   dc_service_enable
-#   dc_service_ensure
-#   ssh_package_name
-#   ssh_package_ensure
-#   ssh_service_name
-#   ssh_service_enable
-#   ssh_service_ensure
-#
-#   Required:
-#   auth_servers - a list of DNS names for auth servers
-#   groups_allow -  a list of groups allowed on the machine
-#   users_allow - a list of users allowed on the machine
-#   adjoin_domain - domain name for the auth servers list and/or to join
-#   adjoin_user - the user used to join the system to the domain
-#   adjoin_password - the password of the user to join
-#   adjoin_server - the server to join the computer to the domain
+# for a full list of parameters please see the README
 #
 # Actions: installes the centrify packages, pushed out the config file
 # from the templates and joins the system to the domain
