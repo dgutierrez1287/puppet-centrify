@@ -38,14 +38,6 @@ class centrify::config {
     fail('port for ssh does not seem to be a number')
   }
 
-  file {'/etc/centrifydc/ssh/sshd_config':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('centrify/ssh_config.erb'),
-    notify  => Class['centrify::service'],
-  }
-
   file {'/etc/centrifydc/centrifydc.conf':
     owner   => 'root',
     group   => 'root',
