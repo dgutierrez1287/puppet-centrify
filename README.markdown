@@ -75,10 +75,6 @@ Below is a list of optional options and the default values:
 * ssh\_service\_name: the name for the ssh service, the default is *centrify-sshd*
 * ssh\_service\_enable: to enable or disable the ssh service, the default is *true*
 * ssh\_service\_ensure: the ensure for the ssh service, the default is *running*
-* ssh\_permit\_root: to permit root access via ssh, the default is *no*
-* ssh\_port: the port for ssh (note this port must be open on the firewall), the default is *22*
-* ssh\_x11: x11 forwarding for ssh, the default is *no*
-* ssh\_banner: the banner location for ssh, the default is */etc/motd*
 * auto\_join: to autojoin or not to a domain, the default is true
 * primary\_gid: the auto.schema primary gid, the default is none
 * private\_group: the auto.schema private group setting, the default is true
@@ -88,10 +84,20 @@ Below is a list of optional options and the default values:
 * lockout\_bad\_count: the bad count that would cause a lockout
 * merge\_groups: merge local group setting 
 
+**ssh::config_entry**
+
+since version 1.0 there is a new paradigm introduced for editing centrify's sshd options, in previous versions there have only been a few sshd options that have been provided as params, Now there is a new type *centrify::ssh::config_entry*. This type will add or change any config option for the centrify sshd config file
+
+example usage: 
+
+centrify::ssh::config_entry { 'PermitRootLogin':
+	value => 'no',
+}
+
 Upgrading
 ---------
 
-The upgrades since 0.1.0 have been minor and should not require any changes since the default behavior will have the same settings as the did before the addition of those options
+With the upgrade to 1.0.0 there have been major changes especially with the new *centrify::ssh::config_entry* please read over this README to make sure you are ready for these changes.
 
 Limitations
 -----------
