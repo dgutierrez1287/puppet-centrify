@@ -51,12 +51,12 @@ Usage
 example usage with required options:
 	
 	class { 'centrify':
-	 auth_servers    => ["ad1.example.com', 'ad2.example.com'],
-	 users_allow     => ['username1', 'username2'],
-	 adjoin_user     => 'joinuser',
-	 adjoin_password => 'joinpass123',
-	 adjoin_server   => 'ad1.example.com',
-	 adjoin_domain   => 'example.com',
+	 	auth_servers    => ["ad1.example.com', 'ad2.example.com'],
+	 	users_allow     => ['username1', 'username2'],
+	 	adjoin_user     => 'joinuser',
+	 	adjoin_password => 'joinpass123',
+	 	adjoin_server   => 'ad1.example.com',
+	 	adjoin_domain   => 'example.com',
 	}
 
 **Optional Options**
@@ -90,9 +90,9 @@ since version 1.0 there is a new paradigm introduced for editing centrify's sshd
 
 example usage: 
 
-centrify::ssh::config_entry { 'PermitRootLogin':
-	value => 'no',
-}
+	centrify::ssh::config_entry { 'PermitRootLogin':
+		value => 'no',
+	}
 
 Upgrading
 ---------
