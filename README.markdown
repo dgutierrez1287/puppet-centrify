@@ -84,7 +84,7 @@ Below is a list of optional options and the default values:
 * lockout\_bad\_count: the bad count that would cause a lockout
 * merge\_groups: merge local group setting 
 
-**ssh::config_entry**
+**centrify::ssh::config_entry**
 
 since version 1.0 there is a new paradigm introduced for editing centrify's sshd options, in previous versions there have only been a few sshd options that have been provided as params, Now there is a new type *centrify::ssh::config_entry*. This type will add or change any config option for the centrify sshd config file
 
@@ -93,6 +93,24 @@ example usage:
 	centrify::ssh::config_entry { 'PermitRootLogin':
 		value => 'no',
 	}
+
+**centrify::user::home_dir**
+
+This define type will allow you to create a home directory owned by a centrify user and will help manage the most basic of files for a user. 
+
+example usage
+	
+	centrify::user::home_dir { 'someuser':
+		sid 		=> 47859378,
+		bashrc_file 	=> 'puppet:///bashrc/bashrc',
+		ssh_public_key	=> 'puppet:///ssh/id_rsa.pub',
+		ssh_private_key	=> 'puppet:///ssh/id_rsa',
+		authorized_keys => 'puppet:///ssh/auth_keys',
+	}
+
+*sid lookup function*
+
+To assist with the lookup of a users sid (needed for the home directory) there is a function called *centrify_sid_lookup*, given a username this will return the sid for the user, This does make use of the adquery function that is provided by centrify so centrify must be installed (or installed on the puppetmaster) for this function to work, the sid can always be provided manually.
 
 Upgrading
 ---------

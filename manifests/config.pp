@@ -33,11 +33,6 @@ class centrify::config {
     fail('you must give an ad server name to join to')
   }
 
-  # Error check if the ssh_port that is given is a integer
-  if ! is_integer($::centrify::ssh_port) {
-    fail('port for ssh does not seem to be a number')
-  }
-
   file {'/etc/centrifydc/centrifydc.conf':
     owner   => 'root',
     group   => 'root',
