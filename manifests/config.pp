@@ -57,4 +57,20 @@ class centrify::config {
     notify  => Class['centrify::service']
   }
 
+  if ! empty($::centrify::group_overrides) {
+    file {'/etc/centrifydc/group.ovr':
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('centrify/group.ovr.erb'),
+      notify  => Class['centrify::service']
+    }
+  }
+
+  else {
+    file {'/etc/centrifydc/group.ovr':
+      ensure => 'absent'
+    }
+  }
+
 }
