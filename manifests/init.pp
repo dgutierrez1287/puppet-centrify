@@ -24,6 +24,7 @@ class centrify (
   $ssh_service_enable     = $centrify::params::ssh_service_enable,
   $ssh_service_ensure     = $centrify::params::ssh_service_ensure,
   $auth_servers           = $centrify::params::auth_servers,
+  $group_overrides        = $centrify::params::group_overrides,
   $groups_allow           = $centrify::params::groups_allow,
   $users_allow            = $centrify::params::users_allow,
   $adjoin_user            = $centrify::params::adjoin_user,
@@ -52,6 +53,7 @@ class centrify (
   validate_bool($ssh_service_enable)
   validate_string($ssh_service_ensure)
   validate_array($auth_servers)
+  validate_array($group_overrides)
   validate_array($groups_allow)
   validate_array($users_allow)
   validate_string($adjoin_user)

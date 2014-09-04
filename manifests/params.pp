@@ -27,6 +27,7 @@ class centrify::params {
   $ssh_service_enable     = true
   $ssh_service_ensure     = 'running'
   $auth_servers           = []
+  $group_overrides        = []
   $groups_allow           = []
   $users_allow            = []
   $adjoin_user            = ''
