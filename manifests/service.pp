@@ -6,26 +6,37 @@
 #
 #
 class centrify::service {
+  $auto_join = $centrify::auto_join
+  $dc_service_ensure = $centrify::dc_service_ensure
+  $ssh_service_ensure = $centrify::ssh_service_ensure
+  $adjoin_server = $centrify::adjoin_server
+  $adjoin_password = $centrify::adjoin_password
+  $adjoin_domain = $centrify::adjoin_domain
+  $adjoin_user = $centrify::adjoin_user
+  $ssh_service_enable = $centrify::ssh_service_enable
+  $ssh_service_name = $centrify::ssh_service_name
+  $dc_service_name = $centrify::dc_service_name
+  $dc_service_enable = $centrify::dc_service_enable
 
-  if $::centrify::auto_join {
+  if $auto_join {
 
     notice('running with auto_join enabled')
 
     # Error check for the dc_service ensure option
-    if ! ($::centrify::dc_service_ensure in [ 'running', 'stopped' ]) {
+    if ! ($dc_service_ensure in [ 'running', 'stopped' ]) {
       fail('dc_service_ensure parameter must be running or stopped')
     }
 
     # Error check for the ssh_service ensure option
-    if ! ($::centrify::ssh_service_ensure in [ 'running', 'stopped' ]) {
+    if ! ($ssh_service_ensure in [ 'running', 'stopped' ]) {
       fail('ssh_service_ensure parameter must be running or stopped')
     }
 
     # ad-join
     exec { 'adjoin':
       path        => '/usr/bin:/usr/sbin:/bin',
-      command     => "adjoin -w -u ${::centrify::adjoin_user} -s ${::centrify::adjoin_server} -p ${::centrify::adjoin_password} ${::centrify::adjoin_domain}",
-      unless      => "adinfo -d | grep ${::centrify::adjoin_domain}",
+      command     => "adjoin -w -u ${adjoin_user} -s ${adjoin_server} -p ${adjoin_password} ${adjoin_domain}",
+      unless      => "adinfo -d | grep ${adjoin_domain}",
       refreshonly => true,
     }
 
@@ -37,11 +48,11 @@ class centrify::service {
     }
 
   service {'centrify-ssh-service':
-      ensure     => $::centrify::ssh_service_ensure,
-      name       => $::centrify::ssh_service_name,
+      ensure     => $ssh_service_ensure,
+      name       => $ssh_service_name,
       hasrestart => true,
       hasstatus  => true,
-      enable     => $::centrify::ssh_service_enable,
+      enable     => $ssh_service_enable,
       subscribe  => [
         File['/etc/centrifydc/centrifydc.conf'],
         File['/etc/centrifydc/groups.allow'],
@@ -51,11 +62,11 @@ class centrify::service {
   }
 
   service {'centrify-dc-service':
-      ensure     => $::centrify::dc_service_ensure,
-      name       => $::centrify::dc_service_name,
+      ensure     => $dc_service_ensure,
+      name       => $dc_service_name,
       hasrestart => true,
       hasstatus  => true,
-      enable     => $::centrify::dc_service_enable,
+      enable     => $dc_service_enable,
       subscribe  => [
         File['/etc/centrifydc/centrifydc.conf'],
         File['/etc/centrifydc/groups.allow'],
