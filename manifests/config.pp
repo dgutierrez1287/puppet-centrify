@@ -5,22 +5,26 @@
 #
 #
 class centrify::config {
-  $auth_servers = $centrify::auth_servers
-  $users_allow = $centrify::users_allow
-  $groups_allow = $centrify::groups_allow
-  $adjoin_domain = $centrify::adjoin_domain
-  $adjoin_server = $centrify::adjoin_server
+  $auth_servers    = $centrify::auth_servers
+  $users_allow     = $centrify::users_allow
+  $groups_allow    = $centrify::groups_allow
+  $adjoin_domain   = $centrify::adjoin_domain
+  $adjoin_server   = $centrify::adjoin_server
+  $adjoin_zone     = $centrify::adjoin_zone
+  $local_allow     = $centrify::local_allow
   $group_overrides = $centrify::group_overrides
 
-  # Error check for no auth servers
-  if size($auth_servers) == 0 {
-    fail('you must provide at least one auth server for this to work')
+  # Error check for no zone and no auth servers
+  if $adjoin_zone == '' and size ($auth_servers) == 0 {
+      fail('you must provide either a zone or at least one auth server for this to work')
   }
 
-  # Error check for no users or groups allowed in the system
-  if size($users_allow) == 0 {
-    if size($groups_allow) ==0 {
-      fail('there are no users or groups to authenticate, this is not recommended')
+  # If using local allow files, error check for no users/groups allowed in the system
+  if $local_allow == true {
+    if size($users_allow) == 0 {
+      if size($groups_allow) ==0 {
+        fail('there are no users or groups to authenticate, this is not recommended')
+      }
     }
   }
 
@@ -34,9 +38,11 @@ class centrify::config {
     }
   }
 
-  # Error check if the join server is not given
-  if size($adjoin_server) == 0 {
-    fail('you must give an ad server name to join to')
+  # If not joing a zone, error check if the join server is not given
+  if $adjoin_zone == '' {
+    if size($adjoin_server) == 0 {
+      fail('you must give an ad server name to join to')
+    }
   }
 
   file {'/etc/centrifydc/centrifydc.conf':
@@ -47,20 +53,34 @@ class centrify::config {
     notify  => Class['centrify::service'],
   }
 
-  file {'/etc/centrifydc/groups.allow':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('centrify/groups_allow.erb'),
-    notify  => Class['centrify::service'],
+  if $local_allow == true {
+    file {'/etc/centrifydc/groups.allow':
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('centrify/groups_allow.erb'),
+      notify  => Class['centrify::service'],
+    }
+  }
+  else {
+    file {'/etc/centrifydc/group.allow':
+      ensure => 'absent'
+    }
   }
 
-  file {'/etc/centrifydc/users.allow':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('centrify/users_allow.erb'),
-    notify  => Class['centrify::service']
+  if $local_allow == true {
+    file {'/etc/centrifydc/users.allow':
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('centrify/users_allow.erb'),
+      notify  => Class['centrify::service']
+    }
+  }
+  else {
+    file {'/etc/centrifydc/users.allow':
+      ensure => 'absent'
+    }
   }
 
   if ! empty($group_overrides) {
@@ -72,7 +92,6 @@ class centrify::config {
       notify  => Class['centrify::service']
     }
   }
-
   else {
     file {'/etc/centrifydc/group.ovr':
       ensure => 'absent'
