@@ -1,57 +1,59 @@
 # Centrify facter facts
 require 'facter'
 
-# centrify_connected: true/nil
-Facter.add('centrify_connected') do
+# centrify mode
+Facter.add('centrify_mode') do
   confine :kernel => :linux
 
   setcode do
-    connected = nil
     if File::executable?("/usr/bin/adinfo")
-      connected = Facter::Util::Resolution.exec("/usr/bin/adinfo -m")
-      if connected == connected
-        connected = true
-      end
+      mode = Facter::Util::Resolution.exec("/usr/bin/adinfo -m")
+      mode.empty? ? 'null' : mode
+    else
+      'null'
     end
-    connected
   end
 end
 
 # centrify domain controller
 Facter.add('centrify_dc') do
-  confine :centrify_connected => true
+  confine :kernel => :linux
 
   setcode do
-    dc = Facter::Util::Resolution.exec('/usr/bin/adinfo -r')
-    dc.nil? ? nil : dc
+    if File::executable?("/usr/bin/adinfo")
+      dc = Facter::Util::Resolution.exec('/usr/bin/adinfo -r')
+      dc.empty? ? 'null' : dc
+    else
+      nil
+    end
   end
 end
 
 # centrify domain
 Facter.add('centrify_domain') do
-  confine :centrify_connected => true
+  confine :kernel => :linux
 
   setcode do
-    domain = Facter::Util::Resolution.exec('/usr/bin/adinfo -d')
-    domain.nil? ? nil : domain
+    if File::executable?("/usr/bin/adinfo")
+      domain = Facter::Util::Resolution.exec('/usr/bin/adinfo -d')
+      domain.empty? ? 'null' : domain
+    else
+      nil
+    end
   end
 end
 
-# centrify mode
-Facter.add('centrify_mode') do
-
-  setcode do
-    mode = Facter::Util::Resolution.exec('/usr/bin/adinfo -m')
-    mode.nil? ? nil : mode
-  end
-end
 
 # centrify zone
 Facter.add('centrify_zone') do
-  confine :centrify_connected => true
+  confine :kernel => :linux
 
   setcode do
-    zone = Facter::Util::Resolution.exec('/usr/bin/adinfo -z')
-    zone.nil? ? nil : zone
+    if File::executable?("/usr/bin/adinfo")
+      zone = Facter::Util::Resolution.exec('/usr/bin/adinfo -z')
+      zone.empty? ? 'null' : zone
+    else
+      nil
+    end
   end
 end
