@@ -5,17 +5,17 @@
 #
 #
 class centrify::config {
-  $auth_servers    = $centrify::auth_servers
-  $users_allow     = $centrify::users_allow
-  $groups_allow    = $centrify::groups_allow
-  $adjoin_domain   = $centrify::adjoin_domain
-  $adjoin_server   = $centrify::adjoin_server
-  $adjoin_zone     = $centrify::adjoin_zone
-  $local_allow     = $centrify::local_allow
-  $group_overrides = $centrify::group_overrides
+  $auth_servers           = $centrify::auth_servers
+  $users_allow            = $centrify::users_allow
+  $groups_allow           = $centrify::groups_allow
+  $adjoin_domain          = $centrify::adjoin_domain
+  $adjoin_server          = $centrify::adjoin_server
+  $adjoin_enterprise_zone = $centrify::adjoin_enterprise_zone
+  $local_allow            = $centrify::local_allow
+  $group_overrides        = $centrify::group_overrides
 
   # Error check for no zone and no auth servers
-  if $adjoin_zone == '' and size ($auth_servers) == 0 {
+  if $adjoin_enterprise_zone == '' and size ($auth_servers) == 0 {
       fail('you must provide either a zone or at least one auth server for this to work')
   }
 
@@ -39,18 +39,20 @@ class centrify::config {
   }
 
   # If not joing a zone, error check if the join server is not given
-  if $adjoin_zone == '' {
+  if $adjoin_enterprise_zone == '' {
     if size($adjoin_server) == 0 {
       fail('you must give an ad server name to join to')
     }
   }
-
-  file {'/etc/centrifydc/centrifydc.conf':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('centrify/centrifydc_config.erb'),
-    notify  => Class['centrify::service'],
+  # If using an Enterprise zone, let Centrify manage the conf file
+  if $adjoin_enterprise_zone == '' {
+    file {'/etc/centrifydc/centrifydc.conf':
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('centrify/centrifydc_config.erb'),
+      notify  => Class['centrify::service'],
+    }
   }
 
   if $local_allow == true {

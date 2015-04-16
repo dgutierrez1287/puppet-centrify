@@ -35,7 +35,7 @@ class centrify::params {
   $adjoin_password        = ''
   $adjoin_domain          = ''
   $adjoin_server          = ''
-  $adjoin_zone            = ''
+  $adjoin_enterprise_zone = ''
   $adjoin_container       = ''
   $adjoin_force           = false
   $private_group          = true
