@@ -32,7 +32,7 @@ class centrify (
   $adjoin_password        = $centrify::params::adjoin_password,
   $adjoin_domain          = $centrify::params::adjoin_domain,
   $adjoin_server          = $centrify::params::adjoin_server,
-  $adjoin_zone            = $centrify::params::adjoin_zone,
+  $adjoin_enterprise_zone = $centrify::params::adjoin_enterprise_zone,
   $adjoin_container       = $centrify::params::adjoin_container,
   $adjoin_force           = $centrify::params::adjoin_force,
   $private_group          = $centrify::params::private_group,
@@ -70,7 +70,7 @@ class centrify (
   validate_string($adjoin_password)
   validate_string($adjoin_domain)
   validate_string($adjoin_server)
-  validate_string($adjoin_zone)
+  validate_string($adjoin_enterprise_zone)
   validate_string($adjoin_container)
   validate_bool($adjoin_force)
   validate_bool($private_group)
