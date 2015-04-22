@@ -51,7 +51,7 @@ class centrify::config {
       group   => 'root',
       mode    => '0644',
       content => template('centrify/centrifydc_config.erb'),
-      notify  => Class['centrify::service'],
+      notify  => [ Class['centrify::service'], Service['centrify-ssh-service'], Service['centrify-dc-service'] ],
     }
   }
 
@@ -61,7 +61,7 @@ class centrify::config {
       group   => 'root',
       mode    => '0644',
       content => template('centrify/groups_allow.erb'),
-      notify  => Class['centrify::service'],
+      notify  => [ Class['centrify::service'], Service['centrify-ssh-service'], Service['centrify-dc-service'] ],
     }
   }
   else {
@@ -76,7 +76,7 @@ class centrify::config {
       group   => 'root',
       mode    => '0644',
       content => template('centrify/users_allow.erb'),
-      notify  => Class['centrify::service']
+      notify  => [ Class['centrify::service'], Service['centrify-ssh-service'], Service['centrify-dc-service'] ],
     }
   }
   else {
@@ -91,7 +91,7 @@ class centrify::config {
       group   => 'root',
       mode    => '0644',
       content => template('centrify/group.ovr.erb'),
-      notify  => Class['centrify::service']
+      notify  => [ Class['centrify::service'], Service['centrify-ssh-service'], Service['centrify-dc-service'] ],
     }
   }
   else {

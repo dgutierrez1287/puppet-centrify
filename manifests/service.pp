@@ -22,17 +22,6 @@ class centrify::service {
   $dc_service_enable      = $centrify::dc_service_enable
   $local_allow            = $centrify::local_allow
 
-  if $local_allow == true {
-    $config = [File['/etc/centrifydc/centrifydc.conf'],
-              File['/etc/centrifydc/groups.allow'],
-              File['/etc/centrifydc/users.allow'],
-              ]
-  }
-  else {
-    $config = [File['/etc/centrifydc/centrifydc.conf'],
-              ]
-  }
-
   if $auto_join {
 
     notice('running with auto_join enabled')
@@ -80,7 +69,6 @@ class centrify::service {
       hasrestart => true,
       hasstatus  => true,
       enable     => $ssh_service_enable,
-      subscribe  => $config,
       notify     => Exec['adflush'],
     }
 
@@ -90,7 +78,6 @@ class centrify::service {
       hasrestart => true,
       hasstatus  => true,
       enable     => $dc_service_enable,
-      subscribe  => $config,
       notify     => Exec['adflush'],
     }
 
