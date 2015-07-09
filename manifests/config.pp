@@ -13,6 +13,7 @@ class centrify::config {
   $adjoin_enterprise_zone = $centrify::adjoin_enterprise_zone
   $local_allow            = $centrify::local_allow
   $group_overrides        = $centrify::group_overrides
+  $manage_conf            = $centrify::manage_conf
 
   # Error check for no zone and no auth servers
   if $adjoin_enterprise_zone == '' and size ($auth_servers) == 0 {
@@ -44,8 +45,8 @@ class centrify::config {
       fail('you must give an ad server name to join to')
     }
   }
-  # If using an Enterprise zone, let Centrify manage the conf file
-  if $adjoin_enterprise_zone == '' {
+
+  if $manage_conf == true {
     file {'/etc/centrifydc/centrifydc.conf':
       owner   => 'root',
       group   => 'root',

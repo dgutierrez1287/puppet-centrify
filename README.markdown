@@ -84,7 +84,7 @@ Below is a list of optional options and the default values:
 * lockout\_bad\_count: the bad count that would cause a lockout
 * merge\_groups: merge local group setting 
 * group\_overrides: an array of group id overrides that are found in the /etc/centrifydc/group.ovr file
-
+* manage\_conf: manage the Centrify configuration file (default: false) - set to true for Centrify Express or if desiring to manage the Centrify conf outside of Centrify
 **centrify::ssh::config_entry**
 
 since version 1.0 there is a new paradigm introduced for editing centrify's sshd options, in previous versions there have only been a few sshd options that have been provided as params, Now there is a new type *centrify::ssh::config_entry*. This type will add or change any config option for the centrify sshd config file

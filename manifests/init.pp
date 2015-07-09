@@ -48,6 +48,7 @@ class centrify (
   $lockout_bad_count      = $centrify::params::lockout_bad_count,
   $sntp_enabled           = $centrify::params::sntp_enabled,
   $merge_groups           = $centrify::params::merge_groups,
+  $manage_conf            = $centrify::params::manage_conf,
 ) inherits centrify::params {
 
   # validate parameters
@@ -86,6 +87,7 @@ class centrify (
   validate_string($lockout_bad_count)
   validate_bool($sntp_enabled)
   validate_bool($merge_groups)
+  validate_bool($manage_conf)
 
   # include classes for install, config and services
   include '::centrify::install'
