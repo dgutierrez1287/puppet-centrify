@@ -236,8 +236,8 @@ pam.allow.override: root
 #               -> "Manage login filters"
 #
 # You may also specify a file name with a list of users in the file
-pam.allow.users: file:/etc/centrifydc/users.allow
-pam.allow.groups: file:/etc/centrifydc/groups.allow
+<% if @local_allow %>pam.allow.users: file:/etc/centrifydc/users.allow
+pam.allow.groups: file:/etc/centrifydc/groups.allow <% end %>
 ## pam.allow.users: jdoe krusty
 ## pam.allow.groups: smokeallow
 # pam.deny.users: jcool
@@ -480,13 +480,13 @@ adclient.clients.socket2: /var/centrifydc/daemon2
 
 # How often should adclient flush it's entire cache.  0 means never.
 #
-adclient.cache.flush.interval: 24
+adclient.cache.flush.interval: <%= @cache_flush_int %>
 #
 
 # How many hours will a regular object live in the cache, regardless of
 # expiration time?  Default is forever.
 #
-adclient.cache.object.lifetime: 24
+adclient.cache.object.lifetime: <%= @cache_obj_life %>
 #
 
 # How often should the daemon clean up the cache, looking for old objects,
@@ -715,7 +715,7 @@ ord:pam.password.confirm.mesg: Confirm new password:
 #               -> "Security Options"
 #                   -> "Interactive Logon: Prompt user to change password before expiration"
 #
-pam.password.expiry.warn: 14
+pam.password.expiry.warn: <%= @password_warn %>
 #
 
 # What to do if, when a user is logging in, PAM discovers that the user's AD
@@ -1531,7 +1531,7 @@ w password length,\nlack of complexity or a minimum age for the current password
 #               -> "Enable SNTP client"
 #
 # If true, adclient will keep the system clock in sync with the domain.
-# adclient.sntp.enabled: true
+adclient.sntp.enabled: <%= @sntp_enabled %>
 #
 
 # The interval between sntp clock updates.  The value is the base 2
@@ -1921,9 +1921,7 @@ w password length,\nlack of complexity or a minimum age for the current password
 # as root. This list can be replaced using dzdo.env_delete as in the
 # following example.
 #
-# dzdo.env_delete: IFS,CDPATH,LOCALDOMAIN,RES_OPTIONS,HOSTALIASES, NLSPATH,PATH_LOCALE,LD_*,_RLD*,TERMINFO,TERMINFO_DIRS, TERMPATH,TERMCAP,ENV,BASH_ENV,PS4,GLOBIGN
-ORE,SHELLOPTS, JAVA_TOOL_OPTIONS,PERLIO_DEBUG,PERLLIB,PERL5LIB, PERL5OPT,PERL5DB,FPATH,NULLCMD,READNULLCMD,ZDOTDIR, TMPPREFIX,PYTHONHOME,PYTHONPATH,PYTHONINSPECT,R
-UBYLIB, RUBYOPT,KRB5_CONFIG,KRB5_KTNAME,VAR_ACE,USR_ACE,DLC_ACE, SHLIB_PATH, LDR_*,LIBPATH,DYLD_*
+# dzdo.env_delete: IFS,CDPATH,LOCALDOMAIN,RES_OPTIONS,HOSTALIASES,NLSPATH,PATH_LOCALE,LD_*,_RLD*,TERMINFO,TERMINFO_DIRS,TERMPATH,TERMCAP,ENV,BASH_ENV,PS4,GLOBIGNORE,SHELLOPTS,JAVA_TOOL_OPTIONS,PERLIO_DEBUG,PERLLIB,PERL5LIB,PERL5OPT,PERL5DB,FPATH,NULLCMD,READNULLCMD,ZDOTDIR,TMPPREFIX,PYTHONHOME,PYTHONPATH,PYTHONINSPECT,RUBYLIB,RUBYOPT,KRB5_CONFIG,KRB5_KTNAME,VAR_ACE,USR_ACE,DLC_ACE,SHLIB_PATH,LDR_*,LIBPATH,DYLD_*
 #
 
 #
@@ -2254,8 +2252,7 @@ nss.nobody.gid: 99
 # Don't call Centrify group or user iteration for these programs
 # This helps prevent adding local users and groups that conflict with
 # DirectControl users in AD
-nss.program.ignore: useradd,adduser,groupadd,addgroup,userdel,groupdel,usermod,groupmod,chfn,chsh,chpasswd,gpasswd,pwconv,pwunconv,grpconv,grpunconv,redhat-config-
-users
+nss.program.ignore: useradd,adduser,groupadd,addgroup,userdel,groupdel,usermod,groupmod,chfn,chsh,chpasswd,gpasswd,pwconv,pwunconv,grpconv,grpunconv,redhat-config-users,unix_chkpwd
 
 nss.shell.nologin: /sbin/nologin
 
@@ -2490,5 +2487,7 @@ nss.runtime.defaultvalue.var.domain: $DOMAIN
 # You must restart adclient to have this take effect.
 #
 # auto.schema.search.return.max: 1000
-<% @auth_servers.each do |as| %> dns.dc.<%= @adjoin_domain%>: <%= as %>
-<% end %>
+<% if @merge_groups %>adclient.local.group.merge: true <% else %># adclient.local.group.merge: false <% end %>
+<% if @auth_servers %><% @auth_servers.each do |as| %> dns.dc.<%= @adjoin_domain%>: <%= as %>
+<% end %><% end %>
+<% if @log_buffer %>logger.memory.enable.buffer: true<% end %>

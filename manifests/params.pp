@@ -27,6 +27,7 @@ class centrify::params {
   $ssh_service_enable     = true
   $ssh_service_ensure     = 'running'
   $auth_servers           = []
+  $local_allow            = true
   $group_overrides        = []
   $groups_allow           = []
   $users_allow            = []
@@ -34,12 +35,21 @@ class centrify::params {
   $adjoin_password        = ''
   $adjoin_domain          = ''
   $adjoin_server          = ''
+  $adjoin_enterprise_zone = ''
+  $adjoin_container       = ''
+  $adjoin_force           = false
   $private_group          = true
   $primary_gid            = ''
   $auto_join              = true
+  $cache_flush_int        = '24'
+  $cache_obj_life         = '24'
+  $log_buffer             = false
   $maximum_password_age   = '90'
   $minimum_password_age   = '1'
+  $password_warn          = '14'
   $lockout_duration       = '30'
   $lockout_bad_count      = '0'
+  $sntp_enabled           = false
   $merge_groups           = false
+  $manage_conf            = false
 }
