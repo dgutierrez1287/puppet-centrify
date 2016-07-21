@@ -51,5 +51,5 @@ class centrify::params {
   $lockout_bad_count      = '0'
   $sntp_enabled           = false
   $merge_groups           = false
-  $manage_conf            = false
+  $manage_conf            = true
 }

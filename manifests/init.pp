@@ -94,12 +94,8 @@ class centrify (
   include '::centrify::config'
   include '::centrify::service'
 
-  # set anchors for begin and end
-  anchor { '::centrify::begin': }
-  anchor { '::centrify::end': }
-
   # ordering of class execution
-  Anchor ['::centrify::begin'] -> Class ['::centrify::install'] ->
+  anchor { 'centrify_begin': } -> Class ['::centrify::install'] ->
   Class['::centrify::config'] ~> Class['::centrify::service'] ->
-  Anchor['::centrify::end']
+  anchor { 'centrify_end': }
 }
