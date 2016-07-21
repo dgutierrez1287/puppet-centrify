@@ -77,14 +77,14 @@ class centrify (
   validate_bool($private_group)
   validate_string($primary_gid)
   validate_bool($auto_join)
-  validate_string($cache_flush_int)
-  validate_string($cache_obj_life)
+  validate_integer($cache_flush_int)
+  validate_integer($cache_obj_life)
   validate_bool($log_buffer)
-  validate_string($maximum_password_age)
-  validate_string($minimum_password_age)
-  validate_string($password_warn)
-  validate_string($lockout_duration)
-  validate_string($lockout_bad_count)
+  validate_integer($maximum_password_age)
+  validate_integer($minimum_password_age)
+  validate_integer($password_warn)
+  validate_integer($lockout_duration)
+  validate_integer($lockout_bad_count)
   validate_bool($sntp_enabled)
   validate_bool($merge_groups)
   validate_bool($manage_conf)
@@ -95,7 +95,7 @@ class centrify (
   include '::centrify::service'
 
   # ordering of class execution
-  anchor { 'centrify_begin': } -> Class ['::centrify::install'] ->
+  anchor { 'centrify_begin': } -> Class['::centrify::install'] ->
   Class['::centrify::config'] ~> Class['::centrify::service'] ->
   anchor { 'centrify_end': }
 }
