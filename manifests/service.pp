@@ -49,7 +49,7 @@ class centrify::service {
     # adjoin Centrify Enterprise
     exec { 'adjoin Centrify Enterprise':
       path      => '/usr/bin:/usr/sbin:/bin',
-      command   => "adjoin -u ${adjoin_user} -p ${adjoin_password} -c ${adjoin_container} -z ${adjoin_enterprise_zone} -n ${::fqdn} -f ${adjoin_domain}",
+      command   => "adlicense -l && adjoin -u ${adjoin_user} -p ${adjoin_password} -c ${adjoin_container} -z ${adjoin_enterprise_zone} -n ${::fqdn} -f ${adjoin_domain}",
       onlyif    => ['test `adinfo -d | wc -l` -eq 0',
                     "test '${adjoin_enterprise_zone}' != ''"
                     ],
