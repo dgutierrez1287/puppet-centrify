@@ -14,10 +14,10 @@ define centrify::user::home_dir (
       # main home directory
       if $ensure == 'present' {
         file {"/home/${name}":
-          ensure  => 'directory',
-          owner   => $sid,
-          group   => $sid,
-          mode    => 0600,
+          ensure => 'directory',
+          owner  => $sid,
+          group  => $sid,
+          mode   => '0600',
         }
 
         # bashrc file
@@ -26,7 +26,7 @@ define centrify::user::home_dir (
             ensure  => 'present',
             owner   => $sid,
             group   => $sid,
-            mode    => 0740,
+            mode    => '0740',
             source  => $bashrc_file,
             require => File["/home/${name}"],
           }
@@ -43,7 +43,7 @@ define centrify::user::home_dir (
             ensure  => 'directory',
             owner   => $sid,
             group   => $sid,
-            mode    => 0600,
+            mode    => '0600',
             require => File["/home/${name}"],
           }
 
@@ -53,7 +53,7 @@ define centrify::user::home_dir (
               ensure  => 'present',
               owner   => $sid,
               group   => $sid,
-              mode    => 0744,
+              mode    => '0744',
               source  => $ssh_public_key,
               require => File["/home/${name}/.ssh"],
             }
@@ -69,7 +69,7 @@ define centrify::user::home_dir (
               ensure  => 'present',
               owner   => $sid,
               group   => $sid,
-              mode    => 0744,
+              mode    => '0744',
               source  => $ssh_private_key,
               require => File["/home/${name}/.ssh"],
             }
@@ -85,7 +85,7 @@ define centrify::user::home_dir (
               ensure  => 'present',
               owner   => $sid,
               group   => $sid,
-              mode    => 0744,
+              mode    => '0744',
               source  => $authorized_keys,
               require => File["/home/${name}/.ssh"],
             }
