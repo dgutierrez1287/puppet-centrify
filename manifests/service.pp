@@ -6,17 +6,21 @@
 #
 #
 class centrify::service {
-  $auto_join = $centrify::auto_join
-  $dc_service_ensure = $centrify::dc_service_ensure
-  $ssh_service_ensure = $centrify::ssh_service_ensure
-  $adjoin_server = $centrify::adjoin_server
-  $adjoin_password = $centrify::adjoin_password
-  $adjoin_domain = $centrify::adjoin_domain
-  $adjoin_user = $centrify::adjoin_user
-  $ssh_service_enable = $centrify::ssh_service_enable
-  $ssh_service_name = $centrify::ssh_service_name
-  $dc_service_name = $centrify::dc_service_name
-  $dc_service_enable = $centrify::dc_service_enable
+  $auto_join              = $centrify::auto_join
+  $dc_service_ensure      = $centrify::dc_service_ensure
+  $ssh_service_ensure     = $centrify::ssh_service_ensure
+  $adjoin_server          = $centrify::adjoin_server
+  $adjoin_password        = $centrify::adjoin_password
+  $adjoin_domain          = $centrify::adjoin_domain
+  $adjoin_user            = $centrify::adjoin_user
+  $adjoin_enterprise_zone = $centrify::adjoin_enterprise_zone
+  $adjoin_container       = $centrify::adjoin_container
+  $adjoin_force           = $centrify::adjoin_force
+  $ssh_service_enable     = $centrify::ssh_service_enable
+  $ssh_service_name       = $centrify::ssh_service_name
+  $dc_service_name        = $centrify::dc_service_name
+  $dc_service_enable      = $centrify::dc_service_enable
+  $local_allow            = $centrify::local_allow
 
   if $auto_join {
 
@@ -32,12 +36,24 @@ class centrify::service {
       fail('ssh_service_ensure parameter must be running or stopped')
     }
 
-    # ad-join
-    exec { 'adjoin':
-      path        => '/usr/bin:/usr/sbin:/bin',
-      command     => "adjoin -w -u ${adjoin_user} -s ${adjoin_server} -p ${adjoin_password} ${adjoin_domain}",
-      unless      => "adinfo -d | grep ${adjoin_domain}",
-      refreshonly => true,
+    # adjoin Centrify Express
+    exec { 'adjoin Centrify Express':
+      path      => '/usr/bin:/usr/sbin:/bin',
+      command   => "adjoin -w -u ${adjoin_user} -s ${adjoin_server} -p ${adjoin_password} ${adjoin_domain}",
+      onlyif    => ['test `adinfo -d | wc -l` -eq 0',
+                    "test '${adjoin_enterprise_zone}' = ''"
+                    ],
+      logoutput => true,
+    }
+
+    # adjoin Centrify Enterprise
+    exec { 'adjoin Centrify Enterprise':
+      path      => '/usr/bin:/usr/sbin:/bin',
+      command   => "adlicense -l && adjoin -u ${adjoin_user} -p ${adjoin_password} -c ${adjoin_container} -z ${adjoin_enterprise_zone} -n ${::fqdn} -f ${adjoin_domain}",
+      onlyif    => ['test `adinfo -d | wc -l` -eq 0',
+                    "test '${adjoin_enterprise_zone}' != ''"
+                    ],
+      logoutput => true,
     }
 
     #adflush
@@ -47,35 +63,31 @@ class centrify::service {
       refreshonly => true,
     }
 
-  service {'centrify-ssh-service':
+    service {'centrify-ssh-service':
       ensure     => $ssh_service_ensure,
       name       => $ssh_service_name,
       hasrestart => true,
       hasstatus  => true,
       enable     => $ssh_service_enable,
-      subscribe  => [
-        File['/etc/centrifydc/centrifydc.conf'],
-        File['/etc/centrifydc/groups.allow'],
-        File['/etc/centrifydc/users.allow'],
-      ],
-    notify       => Exec['adflush'],
-  }
+      notify     => Exec['adflush'],
+    }
 
-  service {'centrify-dc-service':
+    service {'centrify-dc-service':
       ensure     => $dc_service_ensure,
       name       => $dc_service_name,
       hasrestart => true,
       hasstatus  => true,
       enable     => $dc_service_enable,
-      subscribe  => [
-        File['/etc/centrifydc/centrifydc.conf'],
-        File['/etc/centrifydc/groups.allow'],
-        File['/etc/centrifydc/users.allow'],
-      ],
       notify     => Exec['adflush'],
     }
 
-    Exec['adjoin'] -> Service['centrify-dc-service'] ->
-    Service['centrify-ssh-service'] -> Exec['adflush']
+    if $adjoin_enterprise_zone != '' {
+      Exec['adjoin Centrify Enterprise'] -> Service['centrify-dc-service'] ->
+      Service['centrify-ssh-service'] -> Exec['adflush']
+    }
+    else {
+      Exec['adjoin Centrify Express'] -> Service['centrify-dc-service'] ->
+      Service['centrify-ssh-service'] -> Exec['adflush']
+    }
   }
 }
