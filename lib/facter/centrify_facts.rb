@@ -57,3 +57,20 @@ Facter.add('centrify_zone') do
     end
   end
 end
+
+# centrify bind
+Facter.add('centrify_bind') do
+  confine :kernel => :linux
+
+  setcode do
+    if File::executable?("/usr/bin/adinfo")
+      result = Facter::Util::Resolution.exec('/usr/bin/adinfo -C | grep Cannot')
+      if result.nil?
+        'bad_result'
+      end
+      result.empty? ? true : false
+    else
+      nil
+    end
+  end
+end
